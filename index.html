@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="/assets/LogoThething.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>THE THING STUDIO</title>
+  </head>
+  <body>
+    <!-- Cthulhu Watcher Header -->
+    <header id="cthulhu-header">
+      <!-- Left Flanking Elements -->
+      <div class="header-side side-left">
+        <div class="rune">♆</div>
+        <div class="rune">⎈</div>
+        <div class="rune">☫</div>
+      </div>
+
+      <div id="watcher-canvas-container"></div>
+
+      <!-- Right Flanking Elements -->
+      <div class="header-side side-right">
+        <div class="rune">☫</div>
+        <div class="rune">⎈</div>
+        <div class="rune">♆</div>
+      </div>
+    </header>
+
+    <!-- Background Shift Elements -->
+    <div class="background-shift">
+      <div class="blob blob-1"></div>
+      <div class="blob blob-2"></div>
+    </div>
+
+    <!-- Custom Tentacle Scrollbar -->
+    <div class="tentacle-scrollbar-container">
+      <svg class="tentacle-svg" viewBox="0 0 50 1000" preserveAspectRatio="none">
+        <path class="tentacle-path" d="M25,0 C40,200 10,400 25,600 C40,800 10,950 25,1000" />
+      </svg>
+    </div>
+
+    <!-- Main Content -->
+    <main>
+      <!-- Hero Section -->
+      <section class="hero">
+        <h1 class="hero-title">THE THING STUDIO</h1>
+        <p class="hero-subtitle">We craft things that shouldn't exist...</p>
+      </section>
+
+      <!-- Games Section -->
+      <section class="games" id="games-section">
+        <div class="game-card bitcrash-card">
+          <h2 class="rgb-text">BitCrash</h2>
+          <p>Trò chơi duy nhất tồn tại ở đây. Khám phá sự hỗn loạn trong từng pixel.</p>
+          <button class="game-btn" data-target="https://play.google.com/store/apps">Tải trên Google Play</button>
+        </div>
+      </section>
+      
+      <!-- Extra space for scrolling demo -->
+      <div style="height: 150vh;"></div>
+    </main>
+
+    <!-- Tentacle Strike Overlay for Click Intercept -->
+    <div class="strike-overlay">
+      <svg class="strike-tentacle" viewBox="0 0 100 1000" preserveAspectRatio="none">
+        <!-- Sharp pointy tip at 50,0. Base at 0,1000 and 100,1000 -->
+        <path d="M50,0 C60,200 80,600 100,1000 L0,1000 C20,600 40,200 50,0 Z" />
+      </svg>
+    </div>
+
+    <script type="module" src="/main.js"></script>
+  </body>
+</html>

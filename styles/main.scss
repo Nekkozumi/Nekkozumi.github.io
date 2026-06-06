@@ -1,0 +1,89 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700;900&display=swap');
+@import 'layout';
+@import 'components';
+
+:root {
+  /* Color Palette */
+  --color-deep-void: #080C14;
+  --color-crimson: #D74343;
+  --color-taupe: #A17F67;
+
+  /* Typography */
+  --font-main: 'Outfit', sans-serif;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--color-deep-void);
+  color: #fff;
+  font-family: var(--font-main);
+  overflow-x: hidden;
+  /* We'll hide default scrollbar later when implementing Tentacle Scrollbar */
+}
+
+/* Header for Cthulhu Watcher */
+#cthulhu-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 120px; /* Thinner so it's close to the top */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+  pointer-events: none; /* Allow clicks to pass through to the page */
+}
+
+#watcher-canvas-container {
+  width: 200px;
+  height: 200px;
+  position: relative;
+  /* Glowing aura */
+  filter: drop-shadow(0 0 30px rgba(215, 67, 67, 0.3));
+}
+
+/* Flanking Elements */
+.header-side {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 0 4rem;
+  color: var(--color-taupe);
+  opacity: 0.6;
+  font-size: 2rem;
+  text-shadow: 0 0 10px var(--color-taupe);
+  animation: float 4s ease-in-out infinite;
+
+  .rune {
+    transition: transform 0.3s ease, color 0.3s ease;
+    &:hover {
+      color: var(--color-crimson);
+      transform: scale(1.2);
+    }
+  }
+}
+
+.side-left {
+  animation-delay: 0s;
+}
+
+.side-right {
+  animation-delay: 2s;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+/* Base styling for future sections */
+main {
+  position: relative;
+  z-index: 10;
+}
