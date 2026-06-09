@@ -1,4 +1,3 @@
-/* Background Shift (Blobs) */
 .background-shift {
   position: fixed;
   top: 0;
@@ -8,14 +7,14 @@
   z-index: -1;
   overflow: hidden;
   pointer-events: none;
-  
+
   .blob {
     position: absolute;
     border-radius: 50%;
     filter: blur(100px);
     opacity: 0.4;
   }
-  
+
   .blob-1 {
     width: 600px;
     height: 600px;
@@ -23,7 +22,7 @@
     top: -200px;
     left: -100px;
   }
-  
+
   .blob-2 {
     width: 800px;
     height: 800px;
@@ -33,8 +32,6 @@
   }
 }
 
-/* Custom Tentacle Scrollbar */
-/* Hide default scrollbar */
 ::-webkit-scrollbar {
   width: 0;
   background: transparent;
@@ -51,23 +48,21 @@
   height: 100vh;
   z-index: 999;
   pointer-events: none;
-  
+
   .tentacle-svg {
     width: 100%;
     height: 100%;
     overflow: visible;
   }
-  
+
   .tentacle-path {
     fill: none;
     stroke: var(--color-crimson);
     stroke-width: 6;
     stroke-linecap: round;
-    /* We'll animate stroke-dashoffset with GSAP */
   }
 }
 
-/* Hero Section */
 .hero {
   min-height: 100vh;
   display: flex;
@@ -75,7 +70,7 @@
   justify-content: center;
   align-items: center;
   text-align: center;
-  
+
   .hero-title {
     font-size: 5rem;
     font-weight: 900;
@@ -83,17 +78,15 @@
     color: #fff;
     text-shadow: 0 0 20px rgba(215, 67, 67, 0.5);
     margin-bottom: 1rem;
-    /* Initial state for GSAP */
     filter: blur(20px);
     opacity: 0;
   }
-  
+
   .hero-subtitle {
     font-size: 1.5rem;
     font-weight: 300;
     color: var(--color-taupe);
     letter-spacing: 0.1em;
-    /* Initial state for GSAP */
     opacity: 0;
     transform: translateY(20px);
   }

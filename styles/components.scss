@@ -1,4 +1,3 @@
-/* Games Section */
 .games {
   display: flex;
   flex-direction: column;
@@ -47,7 +46,6 @@
   }
 }
 
-/* Button & Hover Effects */
 .game-btn {
   background: transparent;
   color: var(--color-taupe);
@@ -86,7 +84,6 @@
   }
 }
 
-/* Tentacle Strike Overlay */
 .strike-overlay {
   position: fixed;
   bottom: 0;
