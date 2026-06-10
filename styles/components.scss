@@ -114,3 +114,36 @@
     background-position: 200% center;
   }
 }
+
+.abyss-footer {
+  padding: 8rem 2rem 6rem;
+  text-align: center;
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.abyss-divider {
+  width: 200px;
+  height: 2px;
+  background: linear-gradient(to right, transparent, var(--color-crimson), transparent);
+  margin-bottom: 2rem;
+  opacity: 0.5;
+}
+
+.abyss-text {
+  font-size: 1.4rem;
+  color: rgba(161, 127, 103, 0.4);
+  font-style: italic;
+  letter-spacing: 0.05em;
+}
+
+.abyss-subtext {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.15);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}

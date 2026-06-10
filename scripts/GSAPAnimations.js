@@ -1,54 +1,53 @@
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { openCthulhuEye } from './CthulhuWatcher.js';
 
 gsap.registerPlugin(ScrollTrigger);
 
 export function initGSAPAnimations() {
+  // --- INTRO SEQUENCE ---
+  const tlIntro = gsap.timeline();
+
+  // Initial state: Eye is large and in the center of the screen
+  gsap.set('#cthulhu-header', { y: '30vh', scale: 3, transformOrigin: 'center center' });
+  gsap.set('#app-content', { opacity: 0 });
+
+  // 1. Wait in the dark for 1 second
+  tlIntro.to({}, { duration: 1 })
+  // 2. Open Eye
+  .add(() => {
+    openCthulhuEye(2000); // Takes 2 seconds to open fully
+  })
+  .to({}, { duration: 2 }) // Wait for eye to open
+  // 3. Zoom out to header position
+  .to('#cthulhu-header', { 
+    y: 0, 
+    scale: 1, 
+    duration: 2.5, 
+    ease: 'power3.inOut' 
+  })
+  // 4. Fade in the rest of the site content
+  .to('#app-content', { 
+    opacity: 1, 
+    duration: 2, 
+    ease: 'power2.out' 
+  }, "-=1.5");
+
+  // Hero text animations (after intro)
   gsap.to('.hero-title', {
     filter: 'blur(0px)',
     opacity: 1,
     duration: 2.5,
     ease: 'power3.out',
-    delay: 0.5
+    delay: 4
   });
 
-  gsap.to('.hero-subtitle', {
-    opacity: 1,
-    y: 0,
-    duration: 2,
-    ease: 'power2.out',
-    delay: 1.5
-  });
 
-  gsap.to('.blob-1', {
-    x: '20vw',
-    y: '10vh',
-    scale: 1.2,
-    duration: 10,
-    repeat: -1,
-    yoyo: true,
-    ease: 'sine.inOut'
-  });
-
-  gsap.to('.blob-2', {
-    x: '-15vw',
-    y: '-15vh',
-    scale: 0.8,
-    duration: 12,
-    repeat: -1,
-    yoyo: true,
-    ease: 'sine.inOut',
-    delay: 1
-  });
-
+  // --- TENTACLE SCROLLBAR ---
   const tentaclePath = document.querySelector('.tentacle-path');
   if (tentaclePath) {
-    const length = tentaclePath.getTotalLength();
-
-    gsap.set(tentaclePath, {
-      strokeDasharray: length,
-      strokeDashoffset: length
-    });
+    const pathLength = tentaclePath.getTotalLength();
+    gsap.set(tentaclePath, { strokeDasharray: pathLength, strokeDashoffset: pathLength });
 
     gsap.to(tentaclePath, {
       strokeDashoffset: 0,
@@ -57,57 +56,62 @@ export function initGSAPAnimations() {
         trigger: 'body',
         start: 'top top',
         end: 'bottom bottom',
-        scrub: 0.5
+        scrub: 1,
       }
     });
   }
 
+  // --- BUTTON HOVER & CLICK INTERCEPT ---
   const buttons = document.querySelectorAll('.game-btn');
   const strikeTentacle = document.querySelector('.strike-tentacle');
 
   buttons.forEach(btn => {
     btn.addEventListener('click', (e) => {
       e.preventDefault();
+      const targetUrl = btn.getAttribute('data-target');
 
-      const rect = btn.getBoundingClientRect();
-      const targetName = btn.getAttribute('data-target');
-
-      gsap.set(strikeTentacle, {
-        left: e.clientX - 30,
-        top: window.innerHeight,
-        opacity: 1
-      });
-
-      const tl = gsap.timeline();
-
-      tl.to(strikeTentacle, {
-        top: e.clientY,
+      // Tentacle strike animation
+      gsap.to(strikeTentacle, {
+        top: '20vh',
+        ease: 'power4.out',
         duration: 0.3,
-        ease: 'power4.in'
-      })
-        .to(btn, {
-          scale: 0.9,
-          boxShadow: '0 0 40px rgba(215, 67, 67, 0.8)',
-          duration: 0.1
-        })
-        .to(strikeTentacle, {
-          top: window.innerHeight,
-          duration: 0.5,
-          ease: 'power2.out',
-          delay: 0.1
-        })
-        .to(btn, {
-          scale: 1,
-          boxShadow: '0 0 0px rgba(215, 67, 67, 0)',
-          duration: 0.2
-        }, '-=0.5')
-        .call(() => {
-          if (targetName && targetName.startsWith('http')) {
-            window.open(targetName, '_blank');
-          } else {
-            alert(`Bắt đầu khám phá: ${targetName.toUpperCase()}!`);
-          }
-        });
+        onComplete: () => {
+          // Intense Glitch Effect
+          gsap.to('.noise-overlay', { opacity: 0.9, duration: 0.1 });
+          
+          const glitchTween = gsap.to('body', { 
+            x: 'random(-15, 15)', 
+            y: 'random(-15, 15)', 
+            rotate: 'random(-2, 2)',
+            filter: 'invert(1) hue-rotate(90deg)',
+            duration: 0.05, 
+            yoyo: true, 
+            repeat: 18 // even number so yoyo ends on "normal" state
+          });
+          
+          // Wait for glitch to fully finish, then clean up
+          glitchTween.then(() => {
+            // Kill any leftover tweens on body
+            gsap.killTweensOf('body');
+            
+            // Explicitly reset only the properties we animated (not clearProps)
+            gsap.set('body', { 
+              x: 0, 
+              y: 0, 
+              rotation: 0, 
+              filter: 'none' 
+            });
+            gsap.set('.noise-overlay', { opacity: 0.06 });
+            gsap.set(strikeTentacle, { top: '100vh' });
+
+            if (targetUrl && targetUrl.startsWith('http')) {
+              window.open(targetUrl, '_blank');
+            } else {
+              alert("The void consumes your request... (Chuyển trang đến: " + targetUrl + ")");
+            }
+          });
+        }
+      });
     });
   });
 }
